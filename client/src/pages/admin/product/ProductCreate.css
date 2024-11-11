@@ -1,0 +1,22 @@
+.responsive-margin {
+    margin-left: -5%;
+  }
+
+  /* Add this to your CSS file */
+/* Add this to your CSS file */
+.form-control:hover,
+.btn:hover {
+  border-color: #007bff; 
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); 
+  transition: all 0.3s ease;
+}
+
+  
+  @media (max-width: 768px) {
+    /* For tablets and smaller screens */
+    .responsive-margin {
+      margin-left: 1%;
+    }
+  }
+  
+
