@@ -29,7 +29,7 @@ const initialState = {
 const ProductCreate = () => {
   const [values, setValues] = useState(initialState);
   const [subOptions, setSubOptions] = useState([]);
-  const [showSubs, setShowSub] = useState(false);
+  const [showSub, setShowSub] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();  // Initialize navigate
   //redux to the token
@@ -86,6 +86,7 @@ const ProductCreate = () => {
       console.log("This sub data", res)
      setSubOptions(res.data)
     })
+    setShowSub(true);
   }
   return (
    
@@ -112,7 +113,7 @@ const ProductCreate = () => {
             setValues={setValues}
             handleCategoryChange={handleCategoryChange}
             subOptions={subOptions}
-            showSubs={showSubs}
+            showSub={showSub}
             />
         </div>
       </div>

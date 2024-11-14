@@ -3,7 +3,13 @@ import { Select } from "antd";
 
 const { Option } = Select;
 
-const ProductCreateForm = ({ handleSubmit, handleChange, values , setValues, handleCategoryChange, subOptions ,showSubs }) => {
+const ProductCreateForm = ({ handleSubmit, 
+    handleChange,
+     values , 
+     setValues, 
+     handleCategoryChange, 
+     subOptions ,
+     showSub }) => {
 
     // destructure
     const {
@@ -129,7 +135,7 @@ const ProductCreateForm = ({ handleSubmit, handleChange, values , setValues, han
             </select>
           </div>
 
-          
+       {showSub && (
       <div>
         <label>Sub Categories</label>
         <Select
@@ -146,7 +152,10 @@ const ProductCreateForm = ({ handleSubmit, handleChange, values , setValues, han
                 </Option>
               ))}
         </Select>
+
       </div>
+
+       ) }   
 
             <br />
             <button className="btn btn-outline-info">Save</button>
