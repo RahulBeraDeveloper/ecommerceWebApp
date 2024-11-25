@@ -28,6 +28,7 @@ import SubUpdate from './pages/admin/sub/SubUpdate';
 import ProductCreate from './pages/admin/product/ProductCreate';
 import AllProducts from './pages/admin/product/AllProducts';
 import UpdateProduct from './pages/admin/product/UpdateProduct';
+import Product from './pages/Product'
 const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate(); // Initialize useNavigate
@@ -90,6 +91,8 @@ const App = () => {
         <Route path="*" element={<NotFound />} />
         <Route path="/register/complete" element={<RegisterComplete />} />
         <Route path="/forgot/password" element={<ForgotPassword />} />
+        <Route path="/product/:slug" element={<Product />} />
+
 
         {/* User protected routes */}
         <Route

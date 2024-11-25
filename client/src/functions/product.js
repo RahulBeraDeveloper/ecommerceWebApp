@@ -35,3 +35,20 @@ export const updateProduct = async (slug, product, authtoken) =>
       authtoken,
     },
   });
+
+
+  export const getProducts = async (sort, order, page) =>
+    await axios.post(`${process.env.REACT_APP_API}/products`, {
+      sort,
+      order,
+      page,
+    });
+                                                      
+
+
+    // export const productsCount = async () =>
+    //   await axios.get(`${process.env.REACT_APP_API}/products/total`);
+    
+    export const getProductsCount = async () =>
+      await axios.get(`${process.env.REACT_APP_API}/products/total`);
+    
