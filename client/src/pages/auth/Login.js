@@ -7,7 +7,7 @@ import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux'; // Redux import
 
 import './Login.css'; // Ensure you import your custom CSS file
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate , useLocation } from 'react-router-dom'; // Import useNavigate
 import { Link } from 'react-router-dom';
 import {createOrUpdateUser} from "../../functions/auth"
 
@@ -22,18 +22,41 @@ const Login = () => { // Remove history prop here
 
   let dispatch = useDispatch();
   
-  useEffect(() => {
-    if (user && user.token) navigate("/"); // Use navigate for redirection
-  }, [user, navigate]);
+  // useEffect(() => {
+  //   if (user && user.token) navigate("/"); // Use navigate for redirection
+  // }, [user, navigate]);
 
 //---roleBasedRedirect---
+// const roleBasedRedirect = (res) => {
+//   if (res.data.role === "admin") {
+//     navigate("/admin/dashboard");
+//   } else {
+//     navigate("/user/history");
+//   }
+// };
+
+const location = useLocation(); // Access the current location
+
+useEffect(() => {
+  const intended = location.state?.from; // Extract `from` if present
+  if (!intended && user && user.token) {
+    navigate("/"); // Redirect to home if no intended route
+  }
+}, [user, location, navigate]);
+
 const roleBasedRedirect = (res) => {
-  if (res.data.role === "admin") {
-    navigate("/admin/dashboard");
+  const intended = location.state?.from; // Extract `from` from state
+  if (intended) {
+    navigate(intended); // Redirect to intended page
   } else {
-    navigate("/user/history");
+    if (res.data.role === "admin") {
+      navigate("/admin/dashboard");
+    } else {
+      navigate("/user/history");
+    }
   }
 };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email.includes('@')) {
