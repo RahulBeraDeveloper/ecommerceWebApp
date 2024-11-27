@@ -9,11 +9,12 @@ import Laptop from '../../images/laptop.png';
 import ProductListItems from "./ProductListItems";
 import './SingleProduct.css';
 import StarRating from "react-star-ratings";
-import RatingModal from "../modal/RatingModal"
+import RatingModal from "../modal/RatingModal";
+import { showAverage } from "../../functions/rating";
 const { Meta } = Card;
 
 const { TabPane } = Tabs;
-const SingleProduct = ({ product }) => {
+const SingleProduct = ({ product , onStarClick , star}) => {
   const { title, description, images, _id } = product;
 
   return (
@@ -39,6 +40,11 @@ const SingleProduct = ({ product }) => {
 
       <div className="col-md-5">
         <h3 className="p-3" style={{ backgroundColor: "#D4BEE4" }}>{title}</h3>
+        {product && product.ratings && product.ratings.length > 0 ? (
+          showAverage(product)
+        ) : (
+          <div className="text-center pt-1 pb-3">No rating yet</div>
+        )}
 
 
         <Card
@@ -54,10 +60,8 @@ const SingleProduct = ({ product }) => {
               <StarRating
                 name={_id}
                 numberOfStars={5}
-                rating={2}
-                changeRating={(newRating, name) =>
-                  console.log("newRating", newRating, "name", name)
-                }
+                rating={star}
+                changeRating={onStarClick}
                 isSelectable={true}
                 starRatedColor="red"
               />
