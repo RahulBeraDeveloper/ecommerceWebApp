@@ -41,14 +41,13 @@ exports.remove = async (req, res) => {
   }
 };
 
-
-exports.read = async(req,res)=>{
-  const product = await Product.findOne({slug:req.params.slug})
-  .populate('category')
-  .populate('subs')
-  .exec();
+exports.read = async (req, res) => {
+  const product = await Product.findOne({ slug: req.params.slug })
+    .populate("category")
+    .populate("subs")
+    .exec();
   res.json(product);
-}
+};
 
 
 exports.update = async (req, res) => {
@@ -156,5 +155,45 @@ exports.productStar = async (req, res) => {
     ).exec();
     console.log("ratingUpdated", ratingUpdated);
     res.json(ratingUpdated);
+  }
+};
+
+
+exports.listRelated = async(req,res)=>{
+  let product = await Product.findById(req.params.productId).exec();
+  const related = await Product.find({
+    _id: { $ne: product._id },
+    category: product.category,
+
+  })
+  .limit(3)
+  .populate('category')
+  .populate('subs')
+  .populate('postedBy')
+  .exec()
+
+  res.json(related);
+}
+
+
+
+// SERACH / FILTER
+
+const handleQuery = async (req, res, query) => {
+  const products = await Product.find({ $text: { $search: query } })
+    .populate("category", "_id name")
+    .populate("subs", "_id name")
+    .populate("postedBy", "_id name")
+    .exec();
+
+  res.json(products);
+};
+
+exports.searchFilters = async (req, res) => {
+  const { query } = req.body;
+
+  if (query) {
+    console.log("query", query);
+    await handleQuery(req, res, query);
   }
 };

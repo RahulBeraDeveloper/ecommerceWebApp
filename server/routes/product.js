@@ -13,6 +13,8 @@ const { create,
     update,
     list,
     productsCount,
+    listRelated,
+    searchFilters,
     productStar } = require("../controllers/product.js");
 
 
@@ -27,6 +29,10 @@ router.put("/product/:slug", authCheck, adminCheck, update);
 router.post('/products', list);
 // rating
 router.put("/product/star/:productId", authCheck, productStar);
+
+router.get("/product/related/:productId", listRelated);
+//search
+router.post("/search/filters", searchFilters);
 
 
 

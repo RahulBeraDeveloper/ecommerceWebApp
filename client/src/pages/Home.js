@@ -5,6 +5,9 @@ import ProductBanner from "./ProductBanner";
 import NewArrivals from "../components/home/NewArrivals";
 import BestSellers from "../components/home/BestSellers";
 import Loader from "../components/cards/Loader";
+import CategoryList from "../components/category/CategoryList";
+import SubList from "../components/sub/SubList";
+
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -62,7 +65,18 @@ const Home = () => {
       Best Sellers
     </h4>
     <BestSellers />
+ 
+    <h4  className="text-center p-3 mt-5 mb-5  jumbotron"
+      style={{ backgroundColor: "#f0f0f0" }}>
+        Categories
+      </h4>
+      <CategoryList />
 
+
+      <h4 className="text-center p-3 mt-5 mb-5  jumbotron" style={{ backgroundColor: "#f0f0f0" }}>
+        Sub Categories
+      </h4>
+      <SubList />
     <br />
     <br />
   </>

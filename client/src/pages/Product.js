@@ -3,10 +3,13 @@ import { useParams } from "react-router-dom";
 import { getProduct, productStar } from "../functions/product";
 import SingleProduct from "../components/cards/SingleProduct";
 import { useSelector } from "react-redux";
+import { getRelated } from "../functions/product";
+import ProductCard from "../components/cards/ProductCard";
 const Product = () => {
   const [product, setProduct] = useState({});
   const { slug } = useParams(); // Get the 'slug' parameter from the URL
   const [star, setStar] = useState(0);
+  const [related, setRelated] = useState([]);
     // redux
     const { user } = useSelector((state) => ({ ...state }));
   useEffect(() => {
@@ -25,9 +28,11 @@ const Product = () => {
 
   
   const loadSingleProduct = () => {
-    getProduct(slug)
-      .then((res) => setProduct(res.data))
-      .catch((err) => console.error("Error loading product:", err));
+    getProduct(slug).then((res) => {
+      setProduct(res.data);
+      // load related
+      getRelated(res.data._id).then((res) => setRelated(res.data));
+    });
   };
 
 
@@ -53,9 +58,26 @@ const Product = () => {
   </div>
 
   <div className="row">
-    <div>Related products</div>
-  </div>
-</div></>;
+        <div className="col text-center pt-5 pb-5 "  >
+          <hr />
+          <h4 >Related Products</h4>
+          <hr />
+        </div>
+      </div>
+
+      <div className="row pb-5">
+        {related.length ? (
+          related.map((r) => (
+            <div key={r._id} className="col-md-4">
+              <ProductCard product={r} />
+            </div>
+          ))
+        ) : (
+          <div className="text-center col">No Products Found</div>
+        )}
+      </div>
+</div>
+</>;
 };
 
 export default Product;

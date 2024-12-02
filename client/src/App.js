@@ -28,7 +28,10 @@ import SubUpdate from './pages/admin/sub/SubUpdate';
 import ProductCreate from './pages/admin/product/ProductCreate';
 import AllProducts from './pages/admin/product/AllProducts';
 import UpdateProduct from './pages/admin/product/UpdateProduct';
-import Product from './pages/Product'
+import Product from './pages/Product';
+import CategoryHome from './pages/category/CategoryHome'
+import SubHome from './pages/sub/SubHome'
+
 const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate(); // Initialize useNavigate
@@ -92,7 +95,8 @@ const App = () => {
         <Route path="/register/complete" element={<RegisterComplete />} />
         <Route path="/forgot/password" element={<ForgotPassword />} />
         <Route path="/product/:slug" element={<Product />} />
-
+        <Route exact path="/category/:slug" element={<CategoryHome />} />
+        <Route path="/sub/:slug" element={<SubHome />} />
 
         {/* User protected routes */}
         <Route
@@ -144,7 +148,7 @@ const App = () => {
           path="/admin/category/:slug"
           element={
             <AdminRoute>
-              <CategoryUpdate/>
+              <CategoryUpdate />
             </AdminRoute>
           }
         />
@@ -159,39 +163,39 @@ const App = () => {
         />
 
 
-         <Route
+        <Route
           path="/admin/sub/:slug"
           element={
             <AdminRoute>
-              <SubUpdate/>
+              <SubUpdate />
             </AdminRoute>
           }
         />
 
-        
-         <Route
+
+        <Route
           path="/admin/product"
           element={
             <AdminRoute>
-              <ProductCreate/>
+              <ProductCreate />
             </AdminRoute>
           }
         />
 
-         <Route
+        <Route
           path="/admin/products"
           element={
             <AdminRoute>
-              <AllProducts/>
+              <AllProducts />
             </AdminRoute>
           }
         />
 
-         <Route
+        <Route
           path="/admin/product/:slug"
           element={
             <AdminRoute>
-              <UpdateProduct/>
+              <UpdateProduct />
             </AdminRoute>
           }
         />
@@ -199,9 +203,9 @@ const App = () => {
       </Routes>
 
 
-      
 
-      
+
+
     </>
   );
 };
