@@ -31,7 +31,7 @@ import UpdateProduct from './pages/admin/product/UpdateProduct';
 import Product from './pages/Product';
 import CategoryHome from './pages/category/CategoryHome'
 import SubHome from './pages/sub/SubHome'
-
+import Shop from './pages/Shop'
 const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate(); // Initialize useNavigate
@@ -96,8 +96,8 @@ const App = () => {
         <Route path="/forgot/password" element={<ForgotPassword />} />
         <Route path="/product/:slug" element={<Product />} />
         <Route exact path="/category/:slug" element={<CategoryHome />} />
-        <Route path="/sub/:slug" element={<SubHome />} />
-
+        <Route path="/sub/:slug" element={<SubHome />} /> //
+        <Route path="/shop" element={<Shop />} />
         {/* User protected routes */}
         <Route
           path="/user/history"

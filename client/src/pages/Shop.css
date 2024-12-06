@@ -1,0 +1,38 @@
+/* Sliding Panel */
+.filter-panel {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 75%;
+    max-width: 300px;
+    height: 100%;
+    background: #f8f9fa;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+    z-index: 1040;
+    overflow-y: auto;
+  }
+  
+  .filter-panel.visible {
+    left: 0;
+  }
+  
+  .filter-content {
+    padding: 20px;
+  }
+  
+  .overlay {
+    filter: blur(3px);
+  }
+  
+  /* Hide filter button on larger screens */
+  @media (min-width: 768px) {
+    .filter-panel {
+      display: none;
+    }
+  
+    .content {
+      filter: none !important;
+    }
+  }
+  

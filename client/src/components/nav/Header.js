@@ -8,6 +8,10 @@ import './Header.css'; // Import custom CSS for hover effects
 import { getAuth } from 'firebase/auth'; // Correct Firebase import for authentication
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'; // useNavigate replaces useHistory in React Router v6
+import Search from "../forms/Search";
+import {
+  ShoppingOutlined,
+} from "@ant-design/icons";
 
 const Header = () => {
   const [current, setCurrent] = useState("home");
@@ -32,12 +36,13 @@ const Header = () => {
 
   return (
     <Navbar bg="light" expand="lg" onSelect={handleSelect}>
-      <Navbar.Brand as={Link} to="/">MyApp</Navbar.Brand>
+      <Navbar.Brand as={Link} to="/">Home</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto" activeKey={current}>
-          <Nav.Link as={Link} to="/" eventKey="home" className="nav-link-custom">
-            Home
+          <Nav.Link as={Link} to="/shop" eventKey="home" className="nav-link-custom">
+          <ShoppingOutlined style={{ marginRight: "8px" }} />
+          Shop
           </Nav.Link>
         </Nav>
 
@@ -66,6 +71,13 @@ const Header = () => {
             )
           }
 
+       <span className="float-right p-1" style={{marginRight:"40px"}} >
+
+         <Search />
+
+       
+         </span>
+
           {!user && (
             <>
               <Nav.Link as={Link} to="/register" eventKey="register" className="nav-link-custom">
@@ -78,10 +90,14 @@ const Header = () => {
           )}
         </Nav>
       </Navbar.Collapse>
+
+
     </Navbar>
   );
 };
 
 export default Header;
+
+
 
 
