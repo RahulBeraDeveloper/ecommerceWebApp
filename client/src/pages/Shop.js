@@ -7,7 +7,12 @@ import { getCategories } from "../functions/category";
 import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "../components/cards/ProductCard";
 import { Menu, Slider, Checkbox } from "antd";
-import { DollarOutlined, DownSquareOutlined } from "@ant-design/icons";
+import {
+  DollarOutlined,
+  DownSquareOutlined,
+  StarOutlined,
+} from "@ant-design/icons";
+import Star from "../components/forms/Star";
 
 const { SubMenu, ItemGroup } = Menu;
 
@@ -18,6 +23,8 @@ const Shop = () => {
   const [ok, setOk] = useState(false);
   const [categories, setCategories] = useState([]);
   const [categoryIds, setCategoryIds] = useState([]);
+  const [star, setStar] = useState("");
+
 
   let dispatch = useDispatch();
   let { search } = useSelector((state) => ({ ...state }));
@@ -27,6 +34,8 @@ const Shop = () => {
     loadAllProducts();
     // fetch categories
     getCategories().then((res) => setCategories(res.data));
+    // fetch subcategories
+
   }, []);
 
   const fetchProducts = (arg) => {
@@ -62,8 +71,12 @@ const Shop = () => {
       type: "SEARCH_QUERY",
       payload: { text: "" },
     });
+
+    // reset
     setCategoryIds([]);
     setPrice(value);
+    setStar("");
+
     setTimeout(() => {
       setOk(!ok);
     }, 300);
@@ -89,11 +102,14 @@ const Shop = () => {
 
   // handle check for categories
   const handleCheck = (e) => {
+    // reset
     dispatch({
       type: "SEARCH_QUERY",
       payload: { text: "" },
     });
     setPrice([0, 0]);
+    setStar("");
+
     // console.log(e.target.value);
     let inTheState = [...categoryIds];
     let justChecked = e.target.value;
@@ -112,6 +128,34 @@ const Shop = () => {
     fetchProducts({ category: inTheState });
   };
 
+  // 5. show products by star rating
+  const handleStarClick = (num) => {
+    // console.log(num);
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar(num);
+
+    fetchProducts({ stars: num });
+  };
+
+  const showStars = () => (
+    <div className="pr-4 pl-4 pb-2">
+      <Star starClick={handleStarClick} numberOfStars={5} />
+      <Star starClick={handleStarClick} numberOfStars={4} />
+      <Star starClick={handleStarClick} numberOfStars={3} />
+      <Star starClick={handleStarClick} numberOfStars={2} />
+      <Star starClick={handleStarClick} numberOfStars={1} />
+    </div>
+  );
+
+
+
+
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -119,7 +163,7 @@ const Shop = () => {
           <h4>Search/Filter</h4>
           <hr />
 
-          <Menu defaultOpenKeys={["1", "2"]} mode="inline">
+          <Menu defaultOpenKeys={["1", "2", "3", "4"]} mode="inline">
             {/* price */}
             <SubMenu
               key="1"
@@ -152,6 +196,20 @@ const Shop = () => {
             >
               <div style={{ maringTop: "-10px" }}>{showCategories()}</div>
             </SubMenu>
+
+            {/* stars */}
+            <SubMenu
+              key="3"
+              title={
+                <span className="h6">
+                  <StarOutlined /> Rating
+                </span>
+              }
+            >
+              <div style={{ maringTop: "-10px" }}>{showStars()}</div>
+            </SubMenu>
+
+   
           </Menu>
         </div>
 
@@ -180,93 +238,3 @@ const Shop = () => {
 export default Shop;
 
 
-// import React, { useState, useEffect } from "react";
-// import { getProductsByCount } from "../functions/product";
-// import { useSelector, useDispatch } from "react-redux";
-// import ProductCard from "../components/cards/ProductCard";
-// import './Shop.css'
-// const Shop = () => {
-//   const [products, setProducts] = useState([]);
-//   const [loading, setLoading] = useState(false);
-//   const [showFilter, setShowFilter] = useState(false); // State for filter panel visibility
-
-//   useEffect(() => {
-//     loadAllProducts();
-//   }, []);
-
-//   const loadAllProducts = () => {
-//     getProductsByCount(12).then((p) => {
-//       setProducts(p.data);
-//       setLoading(false);
-//     });
-//   };
-
-//   const toggleFilterPanel = () => {
-//     setShowFilter(!showFilter);
-//   };
-
-//   const handleSearch = (query) => {
-//     // Implement the logic to search/filter products based on the query
-//     console.log("Search for:", query);
-//     setShowFilter(false); // Hide the panel after the search
-//   };
-
-//   return (
-//     <div className="shop-container">
-//       {/* Button to open filter/search panel on small screens */}
-//       <button
-//         className="btn btn-primary d-md-none"
-//         onClick={toggleFilterPanel}
-//         style={{ position: "fixed", top: "10px", left: "10px", zIndex: 1050 }}
-//       >
-//         Search/Filter
-//       </button>
-
-//       {/* Sliding filter/search panel */}
-//       <div
-//         className={`filter-panel ${showFilter ? "visible" : ""}`}
-//         onClick={toggleFilterPanel}
-//       >
-//         <div className="filter-content">
-//           <h4>Search/Filter Menu</h4>
-//           {/* Add search and filter controls here */}
-//           <button
-//             className="btn btn-secondary"
-//             onClick={() => handleSearch("example query")}
-//           >
-//             Perform Search
-//           </button>
-//         </div>
-//       </div>
-
-//       <div className={`content ${showFilter ? "overlay" : ""}`}>
-//         <div className="container-fluid">
-//           <div className="row">
-//             {/* Hide filter on small screens */}
-//             <div className="col-md-3 d-none d-md-block">Search/Filter Menu</div>
-
-//             <div className="col-md-9">
-//               {loading ? (
-//                 <h4 className="text-danger">Loading...</h4>
-//               ) : (
-//                 <h4 className="text-danger">Products</h4>
-//               )}
-
-//               {products.length < 1 && <p>No products found</p>}
-
-//               <div className="row pb-5">
-//                 {products.map((p) => (
-//                   <div key={p._id} className="col-md-4 mt-3">
-//                     <ProductCard product={p} />
-//                   </div>
-//                 ))}
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Shop;

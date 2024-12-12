@@ -11,13 +11,15 @@ import { useNavigate } from 'react-router-dom'; // useNavigate replaces useHisto
 import Search from "../forms/Search";
 import {
   ShoppingOutlined,
+  ShoppingCartOutlined
 } from "@ant-design/icons";
+import { Badge } from "antd"; // Correct import for Badge component from Ant Design
 
 const Header = () => {
   const [current, setCurrent] = useState("home");
   let dispatch = useDispatch();
   let navigate = useNavigate(); // useNavigate hook from React Router v6
-  let { user } = useSelector((state) => ({ ...state }));
+  let { user , cart} = useSelector((state) => ({ ...state }));
 
   const handleSelect = (eventKey) => {
     setCurrent(eventKey);
@@ -44,6 +46,14 @@ const Header = () => {
           <ShoppingOutlined style={{ marginRight: "8px" }} />
           Shop
           </Nav.Link>
+          <Nav.Link as={Link} to="/cart" eventKey="cart" className="nav-link-custom" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <Badge count={cart ? cart.length : 0} offset={[0, -2]} style={{ backgroundColor: '#FF0000' }}>
+        <ShoppingCartOutlined style={{ fontSize: '20px' }} />
+      </Badge>
+      <span style={{ marginLeft: '5px' }}>Cart</span>
+      </Nav.Link>
+
+
         </Nav>
 
         <Nav className="ms-auto">
@@ -97,7 +107,3 @@ const Header = () => {
 };
 
 export default Header;
-
-
-
-
