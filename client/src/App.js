@@ -33,6 +33,7 @@ import CategoryHome from './pages/category/CategoryHome'
 import SubHome from './pages/sub/SubHome'
 import Shop from './pages/Shop'
 import Cart from './pages/Cart'
+import SideDrawer from './components/drawer/SideDrawer';
 const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate(); // Initialize useNavigate
@@ -87,7 +88,10 @@ const App = () => {
   return (
     <>
       <Header />
+        
       <ToastContainer />
+
+      <SideDrawer/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
