@@ -99,8 +99,9 @@
 
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { userCart } from "../functions/user";
 import {
   Button,
   Card,
@@ -118,6 +119,7 @@ const { Text } = Typography;
 const Cart = () => {
   const { cart, user } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const getTotal = () => {
     return cart.reduce((currentValue, nextValue) => {
@@ -145,9 +147,18 @@ const Cart = () => {
     dispatch({ type: "ADD_TO_CART", payload: updatedCart });
   };
 
+
+
   const saveOrderToDb = () => {
-    // Save the order logic
+    // console.log("cart", JSON.stringify(cart, null, 4));
+    userCart(cart, user.token)
+      .then((res) => {
+        console.log("CART POST RES", res);
+        if (res.data.ok)  navigate("/checkout");
+      })
+      .catch((err) => console.log("cart save err", err));
   };
+
 
   return (
     <Row gutter={[16, 16]} className="cart-container">
