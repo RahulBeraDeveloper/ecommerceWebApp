@@ -79,4 +79,44 @@ exports.getUserCart = async (req, res) => {
   
     res.json({ ok: true });
   };
+  // exports.saveAddress = async (req, res) => {
+  //   const { firstName, lastName, companyName, address } = req.body;
+    
+  //   try {
+  //     const user = await User.findOneAndUpdate(
+  //       { email: req.user.email },
+  //       { firstName, lastName, companyName, address },
+  //       { new: true }
+  //     );
+      
+  //     if (!user) {
+  //       return res.status(400).json({ error: "User not found" });
+  //     }
+      
+  //     res.json({ ok: true, user });
+  //   } catch (err) {
+  //     console.error(err);
+  //     res.status(500).json({ error: "Error saving address and user info" });
+  //   }
+  // };
+
+
+  // Function to get the saved address of the logged-in user
+// exports.getUserAddress = async (req, res) => {
+//   try {
+//     // Find the user by email (authenticated user)
+//     const user = await User.findOne({ email: req.user.email });
+
+//     if (!user) {
+//       return res.status(400).json({ error: "User not found" });
+//     }
+
+//     // Return the user information including the saved address
+//     const { firstName, lastName, companyName, address } = user;
+//     res.json({ firstName, lastName, companyName, address });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: "Error fetching user address" });
+//   }
+// };
   

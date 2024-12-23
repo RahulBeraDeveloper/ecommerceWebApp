@@ -10,6 +10,7 @@ const {
   getUserCart,
   emptyCart,
   saveAddress,
+  getUserAddress
 } = require("../controllers/user");
 
 router.post("/user/cart", authCheck, userCart); // save cart

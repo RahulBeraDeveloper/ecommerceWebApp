@@ -38,3 +38,25 @@ export const userCart = async (cart, authtoken) =>
           },
         }
       );
+
+
+    // export const saveUserAddress = async (authtoken, { firstName, lastName, companyName, address }) => {
+    //   try {
+    //     const response = await axios.post(
+    //       `${process.env.REACT_APP_API}/user/address`,
+    //       { firstName, lastName, companyName, address },
+    //       {
+    //         headers: {
+    //           authtoken,
+    //         },
+    //       }
+    //     );
+    //     return response; // return the response from the server
+    //   } catch (error) {
+    //     console.error("Error saving user address:", error);
+    //     throw error; // propagate the error for handling in the component
+    //   }
+    // };
+    
+
+    // Function to get the user's saved address
