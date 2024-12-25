@@ -71,14 +71,41 @@ exports.getUserCart = async (req, res) => {
     res.json(cart);
   };
   
-  exports.saveAddress = async (req, res) => {
-    const userAddress = await User.findOneAndUpdate(
-      { email: req.user.email },
-      { address: req.body.address }
-    ).exec();
+  // exports.saveAddress = async (req, res) => {
+  //   const userAddress = await User.findOneAndUpdate(
+  //     { email: req.user.email },
+  //     { address: req.body.address }
+  //   ).exec();
   
-    res.json({ ok: true });
+  //   res.json({ ok: true });
+  // };
+
+  exports.saveAddress = async (req, res) => {
+    try {
+      const { address, phone } = req.body; // Destructure address and phone from the request body
+  
+      // Validate phone (if needed on the server side)
+      if (!/^\d{10}$/.test(phone)) {
+        return res.status(400).json({ error: "Phone number must be exactly 10 digits." });
+      }
+  
+      // Update user's address and phone
+      const userAddress = await User.findOneAndUpdate(
+        { email: req.user.email },
+        { 
+          address: address,
+          phone: phone
+        },
+        { new: true } // Return the updated document
+      ).exec();
+  
+      res.json({ ok: true, user: userAddress });
+    } catch (error) {
+      console.error("Error saving address and phone:", error);
+      res.status(500).json({ error: "Failed to save address and phone." });
+    }
   };
+  
   // exports.saveAddress = async (req, res) => {
   //   const { firstName, lastName, companyName, address } = req.body;
     

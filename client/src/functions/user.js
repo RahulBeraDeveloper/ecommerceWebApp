@@ -28,17 +28,27 @@ export const userCart = async (cart, authtoken) =>
         },
       });
     
-    export const saveUserAddress = async (authtoken, address) =>
+    // export const saveUserAddress = async (authtoken, address) =>
+    //   await axios.post(
+    //     `${process.env.REACT_APP_API}/user/address`,
+    //     { address },
+    //     {
+    //       headers: {
+    //         authtoken,
+    //       },
+    //     }
+    //   );
+    export const saveUserAddress = async (authtoken, address, phone) =>
       await axios.post(
         `${process.env.REACT_APP_API}/user/address`,
-        { address },
+        { address, phone }, // Include both address and phone in the request body
         {
           headers: {
             authtoken,
           },
         }
       );
-
+    
 
     // export const saveUserAddress = async (authtoken, { firstName, lastName, companyName, address }) => {
     //   try {
