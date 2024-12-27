@@ -36,6 +36,7 @@ import Cart from './pages/Cart'
 import SideDrawer from './components/drawer/SideDrawer';
 import Checkout from './pages/Checkout'
 import CreateCoupon from './pages/admin/coupon/CreateCoupon'
+import Payment from "./pages/Payment"
 const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate(); // Initialize useNavigate
@@ -107,6 +108,7 @@ const App = () => {
         <Route path="/shop" element={<Shop />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />  
+        <Route path="/payment" element={<Payment />} /> 
         {/* User protected routes */}
         <Route
           path="/user/history"

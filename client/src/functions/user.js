@@ -50,6 +50,20 @@ export const userCart = async (cart, authtoken) =>
       );
     
 
+
+
+      export const applyCoupon = async (authtoken, coupon) =>
+        await axios.post(
+          `${process.env.REACT_APP_API}/user/cart/coupon`,
+          { coupon },
+          {
+            headers: {
+              authtoken,
+            },
+          }
+        );
+      
+
     // export const saveUserAddress = async (authtoken, { firstName, lastName, companyName, address }) => {
     //   try {
     //     const response = await axios.post(

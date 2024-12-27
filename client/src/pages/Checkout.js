@@ -969,7 +969,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Swal from "sweetalert2";
-import { getUserCart, emptyUserCart, saveUserAddress } from "../functions/user";
+import { getUserCart, emptyUserCart, saveUserAddress ,applyCoupon } from "../functions/user";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import {
@@ -984,7 +984,7 @@ import {
   MDBTextArea,
   MDBTypography,
 } from "mdb-react-ui-kit";
-
+import { useNavigate  } from 'react-router-dom'; // Import useNavigate
 const Checkout = () => {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
@@ -993,8 +993,15 @@ const Checkout = () => {
   const [errors, setErrors] = useState({});
   const [addressSaved, setAddressSaved] = useState(false);
   const [coupon, setCoupon] = useState("");
-  const errorTimeoutRef = React.useRef(null);
+  const navigate = useNavigate(); // Use navigate
+  
+  //discount price
+  // discount price
+  const [totalAfterDiscount, setTotalAfterDiscount] = useState("");
+  const [discountError, setDiscountError] = useState("");
 
+  const errorTimeoutRef = React.useRef(null);
+  const couponErrorTimeoutRef = React.useRef(null);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => ({ ...state }));
 
@@ -1004,6 +1011,8 @@ const Checkout = () => {
       setTotal(res.data.cartTotal);
     });
   }, []);
+
+  
 
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
@@ -1016,6 +1025,18 @@ const Checkout = () => {
       clearTimeout(errorTimeoutRef.current);
     };
   }, [errors]);
+
+  useEffect(() => {
+    if (discountError) {
+      couponErrorTimeoutRef.current = setTimeout(() => {
+        setDiscountError("");
+      }, 10000);
+    }
+
+    return () => {
+      clearTimeout(couponErrorTimeoutRef.current);
+    };
+  }, [discountError]);
 
   const emptyCart = () => {
     if (typeof window !== "undefined") {
@@ -1074,10 +1095,26 @@ const Checkout = () => {
   };
 
   const applyDiscountCoupon = () => {
-    Swal.fire({
-      icon: "info",
-      title: "Coupon Applied",
-      text: `Coupon "${coupon}" applied successfully!`,
+    console.log("send coupon to backend", coupon);
+    applyCoupon(user.token, coupon).then((res) => {
+      console.log("RES ON COUPON APPLIED", res.data);
+      if (res.data) {
+        setTotalAfterDiscount(res.data);
+        // update redux coupon applied
+        dispatch({
+          type: "COUPON_APPLIED",
+          payload: true,
+        });
+      }
+      // error
+      if (res.data.err) {
+        setDiscountError(res.data.err);
+        // update redux coupon applied
+        dispatch({
+          type: "COUPON_APPLIED",
+          payload: false,
+        });
+      }
     });
   };
 
@@ -1168,6 +1205,9 @@ const Checkout = () => {
                 >
                   Apply Coupon
                 </button>
+                {discountError && (
+                  <p className="text-danger mt-2">{discountError}</p>
+                )}
               </form>
             </MDBCardBody>
           </MDBCard>
@@ -1199,11 +1239,17 @@ const Checkout = () => {
                   <strong>${total}</strong>
                 </MDBListGroupItem>
               </MDBListGroup>
+              {totalAfterDiscount > 0 && (
+                <p className="bg-success text-white p-2 mt-2 rounded">
+                  Discount Applied: Total Payable: ${totalAfterDiscount}
+                </p>
+              )}
               <div className="d-flex justify-content-between mt-3">
                 <button
                   type="button"
                   className="btn btn-success"
                   disabled={!addressSaved || !products.length}
+                  onClick={() => navigate("/payment")}
                 >
                   Place Order
                 </button>
