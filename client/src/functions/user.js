@@ -64,6 +64,19 @@ export const userCart = async (cart, authtoken) =>
         );
       
 
+
+        export const createOrder = async (stripeResponse, authtoken) =>
+          await axios.post(
+            `${process.env.REACT_APP_API}/user/order`,
+            { stripeResponse },
+            {
+              headers: {
+                authtoken,
+              },
+            }
+          );
+        
+
     // export const saveUserAddress = async (authtoken, { firstName, lastName, companyName, address }) => {
     //   try {
     //     const response = await axios.post(
@@ -84,3 +97,43 @@ export const userCart = async (cart, authtoken) =>
     
 
     // Function to get the user's saved address
+
+
+    export const getUserOrders = async (authtoken) =>
+      await axios.get(`${process.env.REACT_APP_API}/user/orders`, {
+        headers: {
+          authtoken,
+        },
+      });
+
+
+      
+      export const getWishlist = async (authtoken) =>
+        await axios.get(`${process.env.REACT_APP_API}/user/wishlist`, {
+          headers: {
+            authtoken,
+          },
+        });
+      
+      export const removeWishlist = async (productId, authtoken) =>
+        await axios.put(
+          `${process.env.REACT_APP_API}/user/wishlist/${productId}`,
+          {},
+          {
+            headers: {
+              authtoken,
+            },
+          }
+        );
+      
+      export const addToWishlist = async (productId, authtoken) =>
+        await axios.post(
+          `${process.env.REACT_APP_API}/user/wishlist`,
+          { productId },
+          {
+            headers: {
+              authtoken,
+            },
+          }
+        );
+      

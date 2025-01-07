@@ -69,13 +69,33 @@ const ProductCard = ({ product }) => {
           <EyeOutlined className="text-warning" /> <br /> View Product
         </Link>,
 
-            <Tooltip title={tooltip}>
-            <a onClick={handleAddToCart}>
-              <ShoppingCartOutlined className="text-danger" /> <br /> Add to
-              Cart
-            </a>
-          </Tooltip>,
+      // <Tooltip title={tooltip}>
+      //  <a onClick={handleAddToCart} disabled={product.quantity < 1}>
+      //  <ShoppingCartOutlined className="text-danger" /> <br />
+      //  {product.quantity < 1 ? "Out of stock" : "Add to Cart"}
+      //  </a>
+      //  </Tooltip>,
+      <Tooltip title={product.quantity < 1 ? "Out of stock" : tooltip}>
+      <button
+        onClick={handleAddToCart}
+        disabled={product.quantity < 1}
+        style={{
+          border: "none",
+          background: "none",
+          cursor: product.quantity < 1 ? "not-allowed" : "pointer",
+          color: product.quantity < 1 ? "gray" : "inherit",
+        }}
+      >
+        <ShoppingCartOutlined className={product.quantity < 1 ? "text-muted" : "text-danger"} />
+        <br />
+        {product.quantity < 1 ? "Out of stock" : "Add to Cart"}
+      </button>
+    </Tooltip>
+    
+
       ]}
+
+      
     >
       <Meta
         title={title}
