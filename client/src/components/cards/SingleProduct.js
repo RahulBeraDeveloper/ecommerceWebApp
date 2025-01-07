@@ -89,6 +89,9 @@ import RatingModal from "../modal/RatingModal";
 import { showAverage } from "../../functions/rating";
 import _ from "lodash";
 import { useSelector, useDispatch } from "react-redux";
+import { addToWishlist } from "../../functions/user";
+import { useNavigate } from "react-router-dom";
+import swal from 'sweetalert';
 
 const { TabPane } = Tabs;
 
@@ -99,6 +102,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
   // redux
   const { user, cart } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { title, images, description, _id } = product;
 
@@ -130,6 +134,40 @@ const SingleProduct = ({ product, onStarClick, star }) => {
       });
     }
   };
+
+
+  const handleAddToWishlist = (e) => {
+    e.preventDefault();
+    addToWishlist(product._id, user.token)
+      .then((res) => {
+        console.log("ADDED TO WISHLIST", res.data);
+        swal({
+          title: "Added to Wishlist!",
+          text: `${product.title} has been added to your wishlist.`,
+          icon: "success",
+          button: "OK",
+        });
+        navigate("/user/wishlist");
+      })
+      .catch((err) => {
+        console.error("WISHLIST ERROR", err);
+        swal({
+          title: "Error!",
+          text: "Failed to add the product to your wishlist. Please try again.",
+          icon: "error",
+          button: "OK",
+        });
+      });
+  };
+  
+  // const handleAddToWishlist = (e) => {
+  //   e.preventDefault();
+  //   addToWishlist(product._id, user.token).then((res) => {
+  //     console.log("ADDED TO WISHLIST", res.data);
+  //     toast.success("Added to wishlist");
+  //     navigate("/user/wishlist");
+  //   });
+  // };
 
   return (
     <>
@@ -169,9 +207,9 @@ const SingleProduct = ({ product, onStarClick, star }) => {
                 Cart
               </a>
             </Tooltip>,
-            <Link to="/">
-              <HeartOutlined className="text-info" /> <br /> Add to Wishlist
-            </Link>,
+           <a onClick={handleAddToWishlist}>
+           <HeartOutlined className="text-info" /> <br /> Add to Wishlist
+         </a>,
             <RatingModal>
               <StarRating
                 name={_id}

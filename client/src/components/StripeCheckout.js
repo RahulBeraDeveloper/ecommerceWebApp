@@ -3,8 +3,9 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useSelector, useDispatch } from "react-redux";
 import { createPaymentIntent } from "../functions/stripe";
 import { Link } from "react-router-dom";
-
-const StripeCheckout = ({ history }) => {
+import './stripCheckout.css'
+import { createOrder , emptyUserCart } from "../functions/user";
+const StripeCheckout = ({ onPaymentSuccess  }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => ({ ...state }));
 
@@ -13,7 +14,7 @@ const StripeCheckout = ({ history }) => {
   const [processing, setProcessing] = useState("");
   const [disabled, setDisabled] = useState(true);
   const [clientSecret, setClientSecret] = useState("");
-
+  // const [showConfetti, setShowConfetti] = useState(false); // State for confetti
   const stripe = useStripe();
   const elements = useElements();
 
@@ -44,10 +45,35 @@ const StripeCheckout = ({ history }) => {
       // here you get result after successful payment
       // create order and save in database for admin to process
       // empty user cart from redux store and local storage
+      createOrder(payload, user.token).then((res) => {
+        if (res.data.ok) {
+          // empty cart from local storage
+          if (typeof window !== "undefined") localStorage.removeItem("cart");
+          // empty cart from redux
+          dispatch({
+            type: "ADD_TO_CART",
+            payload: [],
+          });
+          // reset coupon to false
+          dispatch({
+            type: "COUPON_APPLIED",
+            payload: false,
+          });
+          // empty cart from database
+          emptyUserCart(user.token);
+        }
+      });
       console.log(JSON.stringify(payload, null, 4));
       setError(null);
       setProcessing(false);
       setSucceeded(true);
+      // setShowConfetti(true);
+      //   // Hide confetti after 10 seconds
+      //   setTimeout(() => setShowConfetti(false), 10000);
+      // Trigger confetti animation on the parent Payment component
+      if (onPaymentSuccess) {
+        onPaymentSuccess();
+      }
     }
   };
 
@@ -78,6 +104,8 @@ const StripeCheckout = ({ history }) => {
 
   return (
     <>
+
+
       <p className={succeeded ? "result-message" : "result-message hidden"}>
         Payment Successful.{" "}
         <Link to="/user/history">See it in your purchase history.</Link>
@@ -109,3 +137,4 @@ const StripeCheckout = ({ history }) => {
 };
 
 export default StripeCheckout;
+

@@ -114,6 +114,7 @@ import {
 } from "antd";
 import { CloseOutlined, CarOutlined } from "@ant-design/icons";
 
+
 const { Text } = Typography;
 
 const Cart = () => {
@@ -161,7 +162,7 @@ const Cart = () => {
 
 
   return (
-    <Row gutter={[16, 16]} className="cart-container">
+    <Row gutter={[16, 16]} className="cart-container" style={{ padding: "3%" }}>
       {/* Left Section (Cart Items) */}
       <Col xs={24} lg={16}>
         <Card
@@ -176,7 +177,7 @@ const Cart = () => {
                 <List.Item>
                   <Row align="middle" gutter={[16, 16]}>
                     {/* Product Image */}
-                    <Col xs={24} sm={6} lg={5}>
+                    <Col xs={24} sm={6} lg={5}  style={{ textAlign: "center" }}>
                       <Image
                         src={
                           item.images.length
