@@ -23,10 +23,14 @@ exports.createPaymentIntent = async (req, res) => {
   let finalAmount = 0;
 
   if (couponApplied && totalAfterDiscount) {
-    finalAmount = totalAfterDiscount;
+    finalAmount = totalAfterDiscount * 100; // Use 100 for cents conversion
   } else {
-    finalAmount = cartTotal;
+    finalAmount = cartTotal * 100; // Use 100 for cents conversion
   }
+  
+  console.log("Cart Total:", cartTotal); // Should log 750 if in dollars
+  console.log("Total After Discount:", totalAfterDiscount); // Should log discount value
+  
 
   // create payment intent with order amount and currency
   const paymentIntent = await stripe.paymentIntents.create({

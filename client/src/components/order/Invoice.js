@@ -54,10 +54,10 @@ const Invoice = ({ order }) => (
           {order.orderStatus}
         </Text>
         {"\n"}
-        <Text>
+        {/* <Text>
           Total Paid: {"       "}
           {order.paymentIntent.amount}
-        </Text>
+        </Text> */}
       </Text>
 
       <Text style={styles.footer}> ~ Thank you for shopping with us ~ </Text>

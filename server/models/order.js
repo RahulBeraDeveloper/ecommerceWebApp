@@ -22,6 +22,7 @@ const orderSchema = new mongoose.Schema(
         "Not Processed",
         "processing",
         "Dispatched",
+        "Cash On Delivery",
         "Cancelled",
         "Completed",
       ],
