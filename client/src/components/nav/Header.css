@@ -1,6 +1,9 @@
- Navbar link custom styles
+/* General styles for icons in Navbar links */
 .nav-link-custom {
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Adds space between icon and text */
 }
 
 .nav-link-custom:hover::after {
@@ -17,5 +20,85 @@
   text-decoration: none;
 }
 
+/* Ensure proper spacing for small screens */
+@media (max-width: 576px) {
+  .nav-link-custom {
+    gap: 12px; /* Slightly increase spacing for smaller screens */
+  }
+
+  .navbar-brand {
+    margin-left: 8px; /* Add spacing to keep icons visually aligned */
+  }
+
+  .navbar-nav .nav-link-custom {
+    padding-left: 10px; /* Add padding to keep items slightly spaced out */
+  }
+}
+/* General styling for Navbar Brand (Icon) */
+.navbar-brand i {
+  font-size: 20px; /* Set the initial size of the icon */
+  margin-left: 16px; /* Increase the left margin for better spacing */
+  
+}
+/* Add a class to ensure animation works on all icon elements */
+.icon-animated {
+  animation: growShrink 2s infinite ease-in-out; /* Apply animation */
+}
+
+@keyframes growShrink {
+  0% {
+    transform: scale(1); /* Start with the original size */
+  }
+  50% {
+    transform: scale(1.2); /* Grow the icon */
+  }
+  100% {
+    transform: scale(1); /* Shrink back to the original size */
+  }
+}
+
+@keyframes growShrink {
+  0% {
+    transform: scale(1); /* Start with the original size */
+  }
+  50% {
+    transform: scale(1.2); /* Grow the icon */
+  }
+  100% {
+    transform: scale(1); /* Shrink back to the original size */
+  }
+}
 
 
+/* Add animation for growing and shrinking the icon */
+.navbar-brand i:hover {
+  transform: scale(1.2); /* Increase the size of the icon when hovered */
+  
+}
+
+/* Add more space to the left side in phone size */
+@media (max-width: 576px) {
+  .navbar-brand {
+    margin-left: 3px; /* Increase the left margin for better spacing */
+  }
+
+  .navbar-brand i {
+    font-size: 25px; /* Slightly increase the size of the icon for mobile */
+  }
+
+  .icon-animated {
+    animation: growShrink 2s infinite ease-in-out; /* Apply animation */
+  }
+  
+  @keyframes growShrink {
+    0% {
+      transform: scale(1); /* Start with the original size */
+    }
+    50% {
+      transform: scale(1.2); /* Grow the icon */
+    }
+    100% {
+      transform: scale(1); /* Shrink back to the original size */
+    }
+  }
+}

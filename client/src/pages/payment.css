@@ -219,3 +219,41 @@ button:hover {
     transform: translateY(100vh) rotate(360deg);
   }
 }
+
+
+
+
+@media only screen and (max-width: 400px) {
+  .container {
+    padding: 15px; 
+    width: 100%;
+  }
+
+  .custom-small-screen {
+    width: 123%;
+    margin-left: -29px; 
+    padding: 10px; 
+  }
+
+  .stripe-form {
+    width: 100%; 
+    margin: 0 auto;
+    padding: 15px;
+    box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1),
+      0px 2px 5px 0px rgba(50, 50, 93, 0.1),
+      0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
+  }
+
+  #card-element {
+    padding: 10px; 
+    max-height: 44px;
+    font-size: 14px; 
+    border: 1px solid rgba(50, 50, 93, 0.1);
+    margin-bottom: 10px; 
+  }
+
+  .stripe-button {
+    font-size: 14px; 
+    padding: 10px 12px; 
+  }
+}

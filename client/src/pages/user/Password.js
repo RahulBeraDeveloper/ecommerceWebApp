@@ -38,6 +38,7 @@ const Password = () => {
     <form onSubmit={handleSubmit}>
       <div className="form-group">
         <label>Your Password</label>
+        <br/>
         <input
           type="password"
           onChange={(e) => setPassword(e.target.value)}
@@ -46,6 +47,7 @@ const Password = () => {
           disabled={loading}
           value={password}
         />
+        <br/>
         <button
           className="btn btn-primary"
           disabled={!password || password.length < 6 || loading}

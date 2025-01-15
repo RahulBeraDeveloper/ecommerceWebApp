@@ -171,7 +171,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
 
   return (
     <>
-      <div className="col-md-7">
+      <div className="col-md-7 mb-2">
         {images && images.length ? (
           <Carousel showArrows={true} autoPlay infiniteLoop>
             {images && images.map((i) => <img src={i.url} key={i.public_id} />)}
@@ -191,7 +191,9 @@ const SingleProduct = ({ product, onStarClick, star }) => {
       </div>
 
       <div className="col-md-5">
-        <h1 className="bg-info p-3">{title}</h1>
+      <h2 className=" p-3 d-none d-md-block" style={{ backgroundColor: "#8174A0" , color:"white"}}>{title}</h2> {/* Visible on large screens */}
+         <h6 className=" p-3 d-block d-md-none" style={{ backgroundColor: "#8174A0", color:"white" }}>{title}</h6> {/* Visible on small screens */}
+
 
         {product && product.ratings && product.ratings.length > 0 ? (
           showAverage(product)

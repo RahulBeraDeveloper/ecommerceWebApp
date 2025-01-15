@@ -37,9 +37,12 @@ import SideDrawer from './components/drawer/SideDrawer';
 import Checkout from './pages/Checkout'
 import CreateCoupon from './pages/admin/coupon/CreateCoupon'
 import Payment from "./pages/Payment"
+import Footer  from './pages/Footer';
+import { useLocation } from 'react-router-dom';
 const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate(); // Initialize useNavigate
+  const location = useLocation();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -109,6 +112,8 @@ const App = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />  
         <Route path="/payment" element={<Payment />} /> 
+      
+        {/* <Route path="/" element={<Footer />} />  */}
         {/* User protected routes */}
         <Route
           path="/user/history"
@@ -222,7 +227,7 @@ const App = () => {
 
       </Routes>
 
-
+      {location.pathname === '/' && <Footer />}
 
 
     </>

@@ -53,6 +53,7 @@ const SubHome = () => {
           <h5 className="text-center col-12">No products found in this sub-category.</h5>
         )}
       </div>
+  
     </div>
   );
 };

@@ -30,4 +30,7 @@ readdirSync("./routes").map((r) => app.use("/api", require("./routes/" + r)));
 // port
 const port = process.env.PORT || 8000;
 
-app.listen(port, () => console.log(`Server is running on port ${port}`));
+// app.listen(port, () => console.log(`Server is running on port ${port}`));
+app.listen(port, '192.168.0.106', () => {
+  console.log('Server running on port 8000');
+});

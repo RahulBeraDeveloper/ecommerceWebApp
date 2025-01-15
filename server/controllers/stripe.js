@@ -23,15 +23,10 @@ exports.createPaymentIntent = async (req, res) => {
   let finalAmount = 0;
 
   if (couponApplied && totalAfterDiscount) {
-<<<<<<< HEAD
+
     finalAmount = totalAfterDiscount * 100; // Use 100 for cents conversion
   } else {
     finalAmount = cartTotal * 100; // Use 100 for cents conversion
-=======
-    finalAmount = totalAfterDiscount;
-  } else {
-    finalAmount = cartTotal;
->>>>>>> 0649d1b58a46d18962749f46de4bab705b5765d1
   }
   
   console.log("Cart Total:", cartTotal); // Should log 750 if in dollars

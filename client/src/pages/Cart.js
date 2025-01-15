@@ -405,7 +405,7 @@ const Cart = () => {
               <br/>
               <br/>
               <Button type="" 
-               style={{ backgroundColor: "#f0ad4e", color: "white", border: "none" }}
+               style={{ backgroundColor: "#441752", color: "white", border: "none" }}
                block onClick={saveCashOrderToDb}>
                  Pay Cash on Delivery
             </Button>

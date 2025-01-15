@@ -38,7 +38,11 @@ const Header = () => {
 
   return (
     <Navbar bg="light" expand="lg" onSelect={handleSelect}>
-      <Navbar.Brand as={Link} to="/">Home</Navbar.Brand>
+      {/* <Navbar.Brand as={Link} to="/"> <i className="bi bi-gem me-3 icon-animated"></i></Navbar.Brand> */}
+      <Navbar.Brand as={Link} to="/"> 
+  <i className="bi bi-gem me-3 icon-animated"></i>
+</Navbar.Brand>
+
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto" activeKey={current}>
@@ -46,12 +50,28 @@ const Header = () => {
           <ShoppingOutlined style={{ marginRight: "8px" }} />
           Shop
           </Nav.Link>
-          <Nav.Link as={Link} to="/cart" eventKey="cart" className="nav-link-custom" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          {/* <Nav.Link as={Link} to="/cart" eventKey="cart" className="nav-link-custom" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
       <Badge count={cart ? cart.length : 0} offset={[0, -2]} style={{ backgroundColor: '#FF0000' }}>
         <ShoppingCartOutlined style={{ fontSize: '20px' }} />
       </Badge>
       <span style={{ marginLeft: '5px' }}>Cart</span>
-      </Nav.Link>
+      </Nav.Link> */}
+      <Nav.Link
+  as={Link}
+  to="/cart"
+  eventKey="cart"
+  className="nav-link-custom"
+>
+  <Badge
+    count={cart ? cart.length : 0}
+    offset={[0, -2]}
+    style={{ backgroundColor: '#FF0000' }}
+  >
+    <ShoppingCartOutlined style={{ fontSize: '20px' }} />
+  </Badge>
+  <span>Cart</span>
+</Nav.Link>
+
 
 
         </Nav>

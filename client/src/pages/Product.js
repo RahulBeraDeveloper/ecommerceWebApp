@@ -59,9 +59,9 @@ const Product = () => {
 
   <div className="row">
         <div className="col text-center pt-5 pb-5 "  >
-          <hr />
-          <h4 >Related Products</h4>
-          <hr />
+          <hr  style={{ backgroundColor: "#8174A0" }}/>
+          <h4  style={{ backgroundColor: "#8174A0" , color:"white"}}>Related Products</h4>
+          <hr  style={{ backgroundColor: "#8174A0"}}/>
         </div>
       </div>
 

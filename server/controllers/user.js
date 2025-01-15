@@ -376,3 +376,94 @@ exports.createCashOrder = async (req, res) => {
   console.log("NEW ORDER SAVED", newOrder);
   res.json({ ok: true });
 };
+
+// In your backend controller, add a new function to fetch the address and phone
+exports.getAddressPhone = async (req, res) => {
+  try {
+    if (!req.user || !req.user.email) {
+      return res.status(400).json({ message: "Email not provided" });
+    }
+
+    let user = await User.findOne({ email: req.user.email }).exec();
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    // Don't perform phone number validation here as it's optional
+    res.json({
+      address: user.address || "",
+      phone: user.phone || "", // Return empty string if phone is not set
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400).send("Error fetching address/phone");
+  }
+};
+
+
+
+
+
+exports.getUserDetails = async (req, res) => {
+  try {
+    // Find the user based on their email from the request
+    const user = await User.findOne({ email: req.user.email })
+      .select("phone address email") // Fetch only the necessary fields
+      .exec();
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Respond with user details
+    res.json({
+      phone: user.phone || "",
+      address: user.address || "",
+      email: user.email, // Include email for consistency
+    });
+  } catch (error) {
+    console.error("Error fetching user details:", error.message);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+
+
+exports.updateUserDetailsById = async (req, res) => {
+  try {
+    // Extract user ID from request parameters
+    const { userId } = req.params;
+
+    // Destructure the fields to be updated from the request body
+    const { phone, address } = req.body;
+
+    // Ensure at least one field is provided for update
+    if (!phone && !address) {
+      return res.status(400).json({ error: "No fields to update provided." });
+    }
+
+    // Update the user based on their ID
+    const updatedUser = await User.findByIdAndUpdate(
+      userId, // Match the user by ID
+      { 
+        ...(phone && { phone }), 
+        ...(address && { address }) 
+      }, // Only update phone and address
+      { new: true, select: "phone address email" } // Return updated fields excluding email from updates
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Respond with the updated user details
+    res.json({
+      phone: updatedUser.phone || "",
+      address: updatedUser.address || "",
+      email: updatedUser.email, // Email is returned but not modifiable
+    });
+  } catch (error) {
+    console.error("Error updating user details:", error.message);
+    res.status(500).json({ error: "Server error" });
+  }
+};

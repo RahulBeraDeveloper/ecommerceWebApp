@@ -26,7 +26,7 @@ const Payment = () => {
       )}
       <h4>Complete your purchase</h4>
       <Elements stripe={promise}>
-        <div className="col-md-8 offset-md-2">
+        <div className="col-md-8 offset-md-2 custom-small-screen">
         <StripeCheckout onPaymentSuccess={handlePaymentSuccess} />
         </div>
       </Elements>

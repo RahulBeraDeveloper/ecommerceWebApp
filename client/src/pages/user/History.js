@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import UserNav from "../../components/nav/UserNav";
 import { getUserOrders } from "../../functions/user";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
-import { toast } from "react-toastify";
 import ShowPaymentInfo from "../../components/cards/ShowPaymentInfo";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import Invoice from "../../components/order/Invoice";
-
+import './History.css'
 const History = () => {
   const [orders, setOrders] = useState([]);
   const { user } = useSelector((state) => ({ ...state }));
@@ -16,14 +15,21 @@ const History = () => {
     loadUserOrders();
   }, []);
 
+  // const loadUserOrders = () =>
+  //   getUserOrders(user.token).then((res) => {
+  //     console.log(JSON.stringify(res.data, null, 4));
+  //     setOrders(res.data);
+  //   });
+
   const loadUserOrders = () =>
     getUserOrders(user.token).then((res) => {
       console.log(JSON.stringify(res.data, null, 4));
-      setOrders(res.data);
+      const sortedOrders = res.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      setOrders(sortedOrders);
     });
 
   const showOrderInTable = (order) => (
-    <table className="table table-bordered">
+    <table className="table table-bordered order-table">
       <thead className="thead-light">
         <tr>
           <th scope="col">Title</th>

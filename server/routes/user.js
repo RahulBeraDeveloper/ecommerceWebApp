@@ -16,7 +16,10 @@ const {
   addToWishlist,
   wishlist,
   removeFromWishlist ,
-  createCashOrder
+  createCashOrder,
+  getAddressPhone,
+  getUserDetails,
+  updateUserDetailsById
 } = require("../controllers/user");
 
 router.post("/user/cart", authCheck, userCart); // save cart
@@ -25,13 +28,15 @@ router.delete("/user/cart", authCheck, emptyCart); // empty cart
 router.post("/user/address", authCheck, saveAddress);
 router.post("/user/order", authCheck, createOrder);
 router.get("/user/orders", authCheck, orders);
-
+router.get("/user/details", authCheck, getUserDetails);
 router.post("/user/cash-order", authCheck, createCashOrder); // cod
 // coupon
 router.post("/user/cart/coupon", authCheck, applyCouponToUserCart);
-
+router.post("/user/getAddress", getAddressPhone);  
 // wishlist
 router.post("/user/wishlist", authCheck, addToWishlist);
+
+router.put("/user/:userId/update", authCheck, updateUserDetailsById);
 router.get("/user/wishlist", authCheck, wishlist);
 router.put("/user/wishlist/:productId", authCheck, removeFromWishlist);
 
